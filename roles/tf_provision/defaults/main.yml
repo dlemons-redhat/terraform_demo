@@ -1,0 +1,9 @@
+---
+aws_region: "us-east-2"
+cidr_block: "10.0.0.0/16"
+workspace: "example"
+aws_key: "my-key"
+teardown: false
+rhel_count: 1
+rhel_instance_type: "t2.medium"
+terraform_s3_bucket: "ansible-dev-tf-backend"

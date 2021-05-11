@@ -1,0 +1,9 @@
+---
+- name: do things
+  hosts: localhost
+  tasks:
+    - name: do terraform things
+      include_role:
+        name: tf_provision
+      tags:
+        - template

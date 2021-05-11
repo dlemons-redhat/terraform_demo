@@ -1,0 +1,19 @@
+---
+# - name: Teardown terraform infra
+#   community.general.terraform:
+#     project_path: '{{ role_path }}/terraform'
+#     state: absent
+#     workspace: "{{ workspace }}"
+# need updated ansible+galaxy content for terraform
+
+- name: set terraform workspace
+  ansible.builtin.shell:
+    cmd: "terraform workspace select {{ workspace }}"
+    chdir: "{{ role_path }}/terraform/"
+    executable: /bin/bash
+
+- name: Teardown terraform infra
+  ansible.builtin.shell:
+    cmd: terraform destroy -auto-approve
+    chdir: "{{ role_path }}/terraform/"
+    executable: /bin/bash

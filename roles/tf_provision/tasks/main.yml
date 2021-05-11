@@ -1,0 +1,15 @@
+---
+- name: template .tf files
+  template:
+    src: "{{ item }}"
+    dest: "{{ role_path }}/terraform/{{ (item | basename | splitext)[0] }}"
+  with_fileglob:
+    - "{{ role_path }}/templates/*.j2"
+  tags:
+    - template
+
+- include_tasks: "provision.yml"
+  when: not teardown
+    
+- include_tasks: "teardown.yml"
+  when: teardown | bool

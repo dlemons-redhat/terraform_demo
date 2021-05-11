@@ -1,0 +1,13 @@
+variable "region" {
+  default = "{{ aws_region }}"
+}
+
+variable "amis" {
+  type = map
+
+  default = {
+    rhel = "ami-03d64741867e7bb94"
+  }
+}
+
+

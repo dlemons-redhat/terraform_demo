@@ -1,0 +1,12 @@
+---
+- name: Build terraform infra
+  community.general.terraform:
+    project_path: '{{ role_path }}/terraform'
+    state: present
+    force_init: yes
+    workspace: "{{ workspace }}"
+  register: deploy_output
+
+- name: Display provisioner output
+  debug: 
+    msg: "{{ deploy_output }}"

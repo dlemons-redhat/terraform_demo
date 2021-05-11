@@ -1,0 +1,4 @@
+---
+workspace: "lemons"
+aws_key: "ansible-dev-key"
+

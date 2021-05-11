@@ -1,0 +1,34 @@
+variable "node-count" {
+  default = "{{ rhel_count }}"
+}
+
+resource "aws_instance" "rhel" {
+  count = "${var.node-count}"
+  ami                    = "${var.amis["rhel"]}"
+  instance_type          = "{{ rhel_instance_type }}"
+  key_name               = "{{ aws_key }}"
+  vpc_security_group_ids = ["${aws_security_group.allow-all-egress.id}", "${aws_security_group.vpc-allow-all.id}"]
+  subnet_id              = "${aws_subnet.{{ workspace }}-subnet.id}"
+  depends_on = [aws_internet_gateway.{{ workspace }}-gateway]
+
+  tags = {
+    Role      = "RHEL"
+    Workspace = "${terraform.workspace}"
+    Name = "${terraform.workspace}-RHEL-${count.index}"
+  }
+}
+
+resource "aws_eip" "rhel" {
+  count = "${var.node-count}"
+  instance = "${aws_instance.rhel[count.index].id}"
+  vpc      = true
+  network_interface = "${aws_vpc.{{ workspace }}.id}"
+  tags = {
+    Workspace = "${terraform.workspace}"
+    Name = "${terraform.workspace}-RHEL-${count.index}"
+  }
+}
+
+output "rhel" {
+  value = "${aws_eip.rhel[*].public_ip}"
+}
