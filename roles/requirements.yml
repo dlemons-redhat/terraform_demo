@@ -1,2 +1,3 @@
 ---
-# add role requirements here
+collections:
+  - community.general
